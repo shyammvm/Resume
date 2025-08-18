@@ -8,8 +8,6 @@ on:
 jobs:
   compile:
     runs-on: ubuntu-latest
-    outputs:
-      pdf_path: ${{ steps.upload.outputs.artifact-name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,14 +17,12 @@ jobs:
         with:
           working_directory: resume
           root_file: resume.tex
-          output_directory: ./build
 
       - name: Upload PDF as artifact
         uses: actions/upload-artifact@v4
-        id: upload
         with:
           name: resume-pdf
-          path: build/resume.pdf
+          path: resume/resume.pdf
 
   deploy:
     runs-on: ubuntu-latest
