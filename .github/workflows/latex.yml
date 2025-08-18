@@ -13,16 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up LaTeX
+      - name: Compile LaTeX
         uses: dante-ev/latex-action@latest
         with:
-          working_directory: .
-          root_file: resume/resume.tex
-
-      - name: Move PDF to publish folder
-        run: |
-          mkdir -p public
-          cp resume/resume.pdf public/
+          working_directory: resume    # folder containing resume.tex
+          root_file: resume.tex        # name of the tex file
+          output_directory: ../public  # outputs PDF to repo-root/public
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
