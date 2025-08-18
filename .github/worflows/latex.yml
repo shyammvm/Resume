@@ -1,9 +1,9 @@
-name: Build LaTeX Resume
+name: Build and Publish Resume
 
 on:
   push:
     branches: [ master ]
-  pull_request:
+  workflow_dispatch:   # allows manual run too
 
 jobs:
   build:
@@ -16,11 +16,16 @@ jobs:
       - name: Set up LaTeX
         uses: dante-ev/latex-action@v2
         with:
-          root_file: resume/resume.tex   # 👈 point to your .tex file
-          working_directory: resume      # 👈 run inside the resume/ folder
+          root_file: resume/resume.tex
+          working_directory: resume
 
-      - name: Upload PDF
-        uses: actions/upload-artifact@v4
+      - name: Move PDF to publish folder
+        run: |
+          mkdir public
+          cp resume/resume.pdf public/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: resume-pdf
-          path: resume/resume.pdf   # 👈 your compiled PDF
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
