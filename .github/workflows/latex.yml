@@ -16,8 +16,8 @@ jobs:
       - name: Set up LaTeX
         uses: dante-ev/latex-action@latest
         with:
+          working_directory: .
           root_file: resume/resume.tex
-          working_directory: resume
 
       - name: Move PDF to publish folder
         run: |
