@@ -1,6 +1,10 @@
-📄 Resume
+# 📄 My Resumes
 
-This repository contains my LaTeX-based resume.  
-It is automatically compiled to PDF using **GitHub Actions** and published via **GitHub Pages**.
+This repository contains my different resume versions for various profiles.  
+They are automatically built with LaTeX and deployed via GitHub Actions to **GitHub Pages**.
 
-Here is my resume : https://shyammvm.github.io/Resume/resume.pdf
+## 🔗 Resume Links
+
+- 🚀 [Software Development Engineer (SDE)](https://<your-username>.github.io/<repo-name>/resume/sde/resume.pdf)
+- 📊 [Data Science (DS)](https://<your-username>.github.io/<repo-name>/resume/ds/resume.pdf)
+- ⚙️ [Data Engineering (DE)](https://<your-username>.github.io/<repo-name>/resume/de/resume.pdf)
