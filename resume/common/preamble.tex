@@ -1,16 +1,69 @@
-% \documentclass[a4paper,10pt]{article} % document type and options
+% Use a clean and professional document class for resumes:
+\documentclass[a4paper,11pt]{article}
 
 % --- Packages ---
-\usepackage[utf8]{inputenc}   % for UTF-8 encoding
-\usepackage{geometry}         % page margins
-\usepackage{hyperref}         % clickable links
-\usepackage{enumitem}         % better lists
-\usepackage{fancyhdr}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}              % Better font encoding
+\usepackage{lmodern}                  % Clean, professional font
+\usepackage{geometry}                 
+\geometry{margin=1in}                 
+\usepackage{hyperref}                 
+\hypersetup{
+  colorlinks=true,
+  urlcolor=blue,
+  linkcolor=black,
+  pdfborder={0 0 0}
+}
+\usepackage{enumitem}                 
+\usepackage{fancyhdr}                 
+\usepackage{setspace}                 % To control line spacing
+\usepackage{parskip}                  % Space between paragraphs instead of indent
 
-% --- Custom formatting ---
-\geometry{margin=1in}         % 1-inch margins
-\setlength{\parindent}{0pt}   % no paragraph indent
+% --- Paragraph and spacing ---
+\setlength{\parindent}{0pt}           % No paragraph indent
+\setlength{\parskip}{6pt}             % Space between paragraphs
+\setstretch{1.1}                      % Slightly more readable line spacing
+
+% --- Header and footer ---
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
 
 % --- Custom commands ---
-\newcommand{\name}[1]{\textbf{\large #1}}
-\newcommand{\sectionTitle}[1]{\vspace{5pt}\textbf{#1}\vspace{3pt}}
+\newcommand{\name}[1]{%
+  {\fontsize{18pt}{20pt}\selectfont\textbf{#1}} % Larger name font for emphasis
+  \par\vspace{6pt}
+}
+
+\newcommand{\sectionTitle}[1]{%
+  \vspace{12pt}
+  \textbf{\large #1}
+  \vspace{6pt}
+  \par\nopagebreak
+}
+
+% --- Section formatting ---
+\usepackage{titlesec}
+% Clean section headings with smaller spacing and no numbers
+\titleformat{\section}{\bfseries\large}{}{0em}{}
+\titlespacing{\section}{0pt}{12pt}{6pt}
+
+% --- Lists ---
+\setlist[itemize]{noitemsep, topsep=2pt, leftmargin=1.5em}
+
+% --- Font ---
+% Use professional fonts like Latin Modern (already enabled with lmodern),
+% avoid script or decorative fonts which ATS might not parse.
+
+% --- Hyperlinks ---
+% Keep links blue but non-intrusive, or black with no border to look professional
+
+% --- Avoid ---
+% Avoid excessive boxes, color, images, or non-standard symbols as they hurt ATS parsing
+
+% --- Additional tips ---
+% Use consistent bullet points, standardized date formats (e.g. YYYY or MMM YYYY),
+% and simple section titles like "Experience", "Education", "Skills".
+
