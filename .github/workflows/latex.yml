@@ -1,43 +1,42 @@
-name: Build & Deploy Resumess
+name: Build and Deploy Resumes
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        resume: [ "resume/de/resume.tex", "resume/ds/resume.tex", "resume/sde/resume.tex" ]
-
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Compile ${{ matrix.resume }}
-        uses: dante-ev/latex-action@latest
-        with:
-          root_file: ${{ matrix.resume }}
+      - name: Set up LaTeX
+        run: sudo apt-get update && sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
 
-      - name: Move PDF to public folder
+      - name: Build SDE Resume
         run: |
-          mkdir -p public/${{ matrix.resume }}
-          mv $(dirname ${{ matrix.resume }})/*.pdf public/${{ matrix.resume }}/
+          cd resume/sde
+          pdflatex resume.tex
+          mv resume.pdf ../../sde.pdf
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: public/
+      - name: Build DS Resume
+        run: |
+          cd resume/ds
+          pdflatex resume.tex
+          mv resume.pdf ../../ds.pdf
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
+      - name: Build DE Resume
+        run: |
+          cd resume/de
+          pdflatex resume.tex
+          mv resume.pdf ../../de.pdf
 
-    steps:
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          keep_files: true
