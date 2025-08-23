@@ -19,6 +19,7 @@ jobs:
             resume/sde/resume.tex
             resume/ds/resume.tex
             resume/de/resume.tex
+          work_in_root_file_dir: true
 
       - name: Create public directory and move PDFs
         run: |
