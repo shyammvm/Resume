@@ -5,6 +5,7 @@ They are automatically built with LaTeX and deployed via GitHub Actions to **Git
 
 ## 🔗 Resume Links
 
-- 🚀 [Software Development Engineer (SDE)](https://<your-username>.github.io/<repo-name>/resume/sde/resume.pdf)
-- 📊 [Data Science (DS)](https://<your-username>.github.io/<repo-name>/resume/ds/resume.pdf)
-- ⚙️ [Data Engineering (DE)](https://<your-username>.github.io/<repo-name>/resume/de/resume.pdf)
+- 🚀 [Software Development Engineer (SDE)](https://shyammvm.github.io/Resume/sde.pdf)
+- 📊 [Data Science (DS)](https://shyammvm.github.io/Resume/ds.pdf)
+- ⚙️ [Data Engineering (DE)](https://shyammvm.github.io/Resume/de.pdf)
+
