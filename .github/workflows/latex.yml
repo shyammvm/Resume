@@ -1,4 +1,4 @@
-name: Build and Publish Resume
+name: Build and Publish Resumes
 
 on:
   push:
@@ -12,17 +12,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Compile LaTeX
+      # Loop through each resume folder and compile
+      - name: Compile all resumes
         uses: dante-ev/latex-action@latest
         with:
-          working_directory: resume
-          root_file: resume.tex
+          root_file: |
+            resume/de/resume.tex
+            resume/ds/resume.tex
+            resume/sde/resume.tex
 
-      - name: Upload PDF as artifact
+      - name: Upload PDFs as artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: resume-pdf
-          path: resume/resume.pdf
+          name: resumes-pdf
+          path: |
+            resume/de/resume.pdf
+            resume/ds/resume.pdf
+            resume/sde/resume.pdf
 
   deploy:
     runs-on: ubuntu-latest
@@ -31,10 +37,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download PDF artifact
+      - name: Download PDFs artifact
         uses: actions/download-artifact@v4
         with:
-          name: resume-pdf
+          name: resumes-pdf
           path: public
 
       - name: Deploy to GitHub Pages
