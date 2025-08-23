@@ -1,4 +1,4 @@
-name: Build and Deploy Resumes
+name: Build and Deploy Resume
 
 on:
   push:
@@ -6,37 +6,29 @@ on:
       - master
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up LaTeX
-        run: sudo apt-get update && sudo apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+      - name: Set up LaTeX & build PDFs
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: |
+            resume/sde/resume.tex
+            resume/ds/resume.tex
+            resume/de/resume.tex
 
-      - name: Build SDE Resume
+      - name: Create public directory and move PDFs
         run: |
-          cd resume/sde
-          pdflatex resume.tex
-          mv resume.pdf ../../sde.pdf
-
-      - name: Build DS Resume
-        run: |
-          cd resume/ds
-          pdflatex resume.tex
-          mv resume.pdf ../../ds.pdf
-
-      - name: Build DE Resume
-        run: |
-          cd resume/de
-          pdflatex resume.tex
-          mv resume.pdf ../../de.pdf
+          mkdir -p public
+          mv resume/sde/resume.pdf public/sde.pdf
+          mv resume/ds/resume.pdf public/ds.pdf
+          mv resume/de/resume.pdf public/de.pdf
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
-          keep_files: true
+          publish_dir: ./public
