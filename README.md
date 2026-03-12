@@ -16,7 +16,7 @@
 
 ## 📑 Resume Directory
 
-Select a profile below to view the latest PDF version. Each resume is optimized for ATS and specific industry requirements.
+Select a profile below to view the latest PDF version. Each resume is optimized for ATS and specific industry requirements. Right click and select 'save link' to download.
 
 | Profile | Status | Download / View |
 | :--- | :---: | :--- |
