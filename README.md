@@ -1,7 +1,7 @@
 # 📄 My Resumes
 
 This repository contains my different resume versions for various profiles.  
-They are automatically built with LaTeX and are available on the links below**.
+They are automatically built with LaTeX and are available on the links below.
 
 ## 🔗 Resume Links
 
