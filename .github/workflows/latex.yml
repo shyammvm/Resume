@@ -39,12 +39,23 @@ jobs:
             resume/de/resume.tex
           work_in_root_file_dir: true
 
-      - name: Create public directory and move PDFs
+      - name: Create public directory and move files
         run: |
           mkdir -p public
-          mv resume/sde/resume.pdf public/sde.pdf
-          mv resume/ds/resume.pdf public/ds.pdf
-          mv resume/de/resume.pdf public/de.pdf
+          # 1. Copy the "Red Bull" themed gate to the root
+          cp index.html public/index.html
+          
+          # 2. Move and rename the specialized PDFs to match your HTML links
+          # This keeps the "Data Engineer Edition" etc. working in the gate
+          mv resume/de/resume.pdf public/resume_de.pdf
+          mv resume/ds/resume.pdf public/resume_ds.pdf
+          mv resume/sde/resume.pdf public/resume_sde.pdf
+
+          # 3. Optional: Legacy support (keeps old direct links alive)
+          # Use 'cp' instead of 'mv' if you have old links floating around
+          cp public/resume_de.pdf public/de.pdf
+          cp public/resume_ds.pdf public/ds.pdf
+          cp public/resume_sde.pdf public/sde.pdf
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

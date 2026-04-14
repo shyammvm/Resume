@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shyam Mohan V M - Resume</title>
+    <style>
+        /* Red Bull "Sketchy" Aesthetic */
+        body { 
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif; 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; background: #fff; margin: 0; 
+        }
+        .container { width: 400px; text-align: center; padding: 20px; }
+        
+        /* The Hand-Drawn Box */
+        .sketch-box { 
+            background: white; padding: 2rem; 
+            border: 2px solid #000; 
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px; /* Wobbly border effect */
+            box-shadow: 5px 5px 0px #000;
+            margin-bottom: 20px;
+        }
+
+        h3 { font-size: 1.5rem; text-transform: uppercase; letter-spacing: -1px; margin-top: 0; }
+        p { font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+        /* Sketchy Inputs & Textarea */
+        input, textarea { 
+            width: 100%; padding: 10px; margin: 8px 0; 
+            border: 1.5px solid #000; 
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            outline: none; font-family: inherit; box-sizing: border-box;
+        }
+
+        /* The Button */
+        button { 
+            background: #fff; color: #000; border: 2px solid #000; 
+            padding: 12px 20px; margin-top: 10px;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            cursor: pointer; width: 100%; font-weight: bold; 
+            text-transform: uppercase; transition: 0.2s;
+        }
+        button:hover { background: #000; color: #fff; }
+        /* Style for under-construction buttons */
+        .res-btn.inactive {
+            background: #f4f4f4;
+            color: #999;
+            border: 1.5px dashed #000; /* Dashed border for "under construction" feel */
+            cursor: not-allowed;
+            pointer-events: none;
+            box-shadow: none;
+            text-decoration: line-through; /* Optional: adds to the "not ready" look */
+        }
+        .options-list { display: flex; flex-direction: column; gap: 12px; }
+        .res-btn { 
+            text-decoration: none; color: #000; padding: 12px; 
+            border: 1.5px solid #000; font-weight: bold;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            text-transform: uppercase; font-size: 0.85rem;
+        }
+        .res-btn:hover { background: #f0f0f0; border-width: 2.5px; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="gate" class="sketch-box">
+            <h3>Hey there,</h3>
+            <p>care to fill some details? (optional).</p>
+            <form id="leadForm">
+                <input type="text" id="name" placeholder="Who are you? (Optional)">
+                <input type="email" id="email" placeholder="Email? (Optional)">
+                <input type="text" id="purpose" placeholder="Why are you here? (Purpose)">
+                <button type="submit" id="btn">Get the Resume</button>
+            </form>
+        </div>
+
+        <div id="success" class="sketch-box hidden">
+            <h3>Choose your flavor</h3>
+            <div class="options-list">
+                <a href="resume_de.pdf" target="_blank" class="res-btn">Data Engineer Edition</a>
+                
+                <a class="res-btn inactive">Data Scientist Edition</a>
+                <a class="res-btn inactive">SDE / Backend Edition</a>
+            </div>
+            <p style="margin-top: 15px; font-size: 0.7rem;">Care to give some anonymous feedback?</p>
+            <textarea id="feedback" placeholder="Your feedback here..." style="width: 100%; height: 60px; border: 1.5px solid #000; border-radius: 255px 15px 225px 15px/15px 225px 15px 255px; padding: 10px; font-family: inherit;"></textarea>
+            <button id="fb-btn" style="padding: 8px; font-size: 0.8rem; margin-top: 5px;">Send Feedback 🖋️</button>
+        </div>
+    </div>
+
+    <script>
+        // Use your specific Apps Script URL [cite: 15]
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwfjW1Aik2Ti1QoFno3BmRpfYh8Fk_5Ub89ASCXzxeeBt5BKur50rz1qd2x0UJdg0pS/exec';
+        
+        const form = document.getElementById('leadForm');
+
+        function showOptions() {
+            document.getElementById('gate').classList.add('hidden');
+            document.getElementById('success').classList.remove('hidden');
+        }
+
+        // Logic for Initial Information Submission
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            document.getElementById('btn').disabled = true;
+            document.getElementById('btn').innerText = "Inking the pages...";
+
+            const name = document.getElementById('name').value || "Anonymous Visitor";
+            const email = document.getElementById('email').value || "None Provided";
+            const purpose = document.getElementById('purpose').value || "General Browsing";
+
+            fetch(scriptURL, { 
+                method: 'POST', 
+                mode: 'no-cors', 
+                body: JSON.stringify({ name, email, purpose }) 
+            })
+            .then(() => showOptions())
+            .catch(() => showOptions());
+        });
+
+        // Logic for Feedback Submission (Triggered when user clicks out of the box)
+        const fbBtn = document.getElementById('fb-btn');
+        const feedbackArea = document.getElementById('feedback');
+        const fbStatus = document.getElementById('fb-status');
+
+        fbBtn.addEventListener('click', () => {
+            const feedbackText = feedbackArea.value.trim();
+            
+            if (feedbackText.length > 0) {
+                fbBtn.disabled = true;
+                fbBtn.innerText = "Inking...";
+                
+                fetch(scriptURL, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    body: JSON.stringify({ feedback: feedbackText }) 
+                })
+                .then(() => {
+                    fbStatus.classList.remove('hidden');
+                    fbStatus.innerText = "Thanks for the feedback! ✨";
+                    feedbackArea.value = "";
+                    fbBtn.innerText = "Sent!";
+                    setTimeout(() => { 
+                        fbStatus.classList.add('hidden'); 
+                        fbBtn.disabled = false;
+                        fbBtn.innerText = "Send More? 🖋️";
+                    }, 3000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
