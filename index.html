@@ -67,12 +67,13 @@
     <div class="container">
         <div id="gate" class="sketch-box">
             <h3>Hey there,</h3>
-            <p>care to fill some details? (optional).</p>
+            <p>I'm Shyam, please find my resumes in the next page.</p>
+            <p>*Optional</p>
             <form id="leadForm">
-                <input type="text" id="name" placeholder="Who are you? (Optional)">
-                <input type="email" id="email" placeholder="Email? (Optional)">
-                <input type="text" id="purpose" placeholder="Why are you here? (Purpose)">
-                <button type="submit" id="btn">Get the Resume</button>
+                <input type="text" id="name" placeholder="Who are you?*">
+                <input type="email" id="email" placeholder="Email?*">
+                <input type="text" id="purpose" placeholder="Why are you here?*">
+                <button type="submit" id="btn">Continue</button>
             </form>
         </div>
 
@@ -91,7 +92,6 @@
     </div>
 
     <script>
-        // Use your specific Apps Script URL [cite: 15]
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwfjW1Aik2Ti1QoFno3BmRpfYh8Fk_5Ub89ASCXzxeeBt5BKur50rz1qd2x0UJdg0pS/exec';
         
         const form = document.getElementById('leadForm');
@@ -101,11 +101,10 @@
             document.getElementById('success').classList.remove('hidden');
         }
 
-        // Logic for Initial Information Submission
         form.addEventListener('submit', e => {
             e.preventDefault();
             document.getElementById('btn').disabled = true;
-            document.getElementById('btn').innerText = "Inking the pages...";
+            document.getElementById('btn').innerText = "Submitting...";
 
             const name = document.getElementById('name').value || "Anonymous Visitor";
             const email = document.getElementById('email').value || "None Provided";
@@ -120,36 +119,35 @@
             .catch(() => showOptions());
         });
 
-        // Logic for Feedback Submission (Triggered when user clicks out of the box)
         const fbBtn = document.getElementById('fb-btn');
         const feedbackArea = document.getElementById('feedback');
         const fbStatus = document.getElementById('fb-status');
 
         fbBtn.addEventListener('click', () => {
-            const feedbackText = feedbackArea.value.trim();
-            
-            if (feedbackText.length > 0) {
-                fbBtn.disabled = true;
-                fbBtn.innerText = "Inking...";
-                
+        const feedbackText = feedbackArea.value.trim();
+        if (!feedbackText) return;
+
+        fbBtn.disabled = true;
+        fbBtn.innerText = "Sent!"; 
+        feedbackArea.value = "";
+        setTimeout(() => {
+            try {
                 fetch(scriptURL, { 
                     method: 'POST', 
                     mode: 'no-cors', 
+                    headers: { 'Content-Type': 'text/plain' }, 
                     body: JSON.stringify({ feedback: feedbackText }) 
-                })
-                .then(() => {
-                    fbStatus.classList.remove('hidden');
-                    fbStatus.innerText = "Thanks for the feedback! ✨";
-                    feedbackArea.value = "";
-                    fbBtn.innerText = "Sent!";
-                    setTimeout(() => { 
-                        fbStatus.classList.add('hidden'); 
-                        fbBtn.disabled = false;
-                        fbBtn.innerText = "Send More? 🖋️";
-                    }, 3000);
                 });
+            } catch (e) { 
             }
-        });
+        }, 10);
+
+        // 3. RESET THE BUTTON LATER
+        setTimeout(() => {
+            fbBtn.disabled = false;
+            fbBtn.innerText = "Send More? 🖋️";
+        }, 3000);
+    });
     </script>
 </body>
 </html>
