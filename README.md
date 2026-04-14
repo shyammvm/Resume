@@ -18,9 +18,12 @@
 Use the below link to download a copy of my resume:
 
 <p align="center">
+  <br />
   <a href="https://shyammvm.github.io/Resume/">
-    <h1><code>[ ENTER RESUME GATEWAY ]</code></h1>
+    <img src="https://img.shields.io/badge/VIEW%20RESUME%20PORTFOLIO-000000?style=for-the-badge&logo=googlesheets&logoColor=white" alt="View Resume Portfolio" height="50">
   </a>
+  <br />
+  <br />
 </p>
 
 
